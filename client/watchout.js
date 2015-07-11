@@ -3,7 +3,8 @@
 var gameOptions = {
   width: 800,
   height: 800,
-  numEnemies: 40
+  numEnemies: 40,
+  radius: 20
 };
 
 var gameBoard = d3.select(".board")
@@ -15,9 +16,9 @@ var gameBoard = d3.select(".board")
 var player = gameBoard.append("circle")
               .attr({
                 id: "player",
-                cx: gameOptions.width/2,
-                cy: gameOptions.height/2,
-                r: 50,
+                cx: gameOptions.width/2 - gameOptions.radius,
+                cy: gameOptions.height/2 - gameOptions.radius,
+                r: gameOptions.radius,
                 fill: "white"
               });
 
@@ -26,20 +27,43 @@ var player = gameBoard.append("circle")
 
 var enemyData = [];
 
-var createEnemies = function(n){
-
-  // var activeEnemies = [];
-  for(var i = 0 ; i < n; i++){
-    // activeEnemies.push(i);
+var createEnemies = function(n) {
+  for(var i = 0 ; i < n; i++) {
     enemyData.push({
       class: "enemy",
-      x: function() { return Math.random() * gameOptions.width; },
-      y: function() { return Math.random() * gameOptions.width; }
+      x: function() { return Math.random() * 700 - gameOptions.radius; },
+      y: function() { return Math.random() * 700 - gameOptions.radius; },
     });
   }
 };
 
 createEnemies(gameOptions.numEnemies);
+
+var enemies = gameBoard.selectAll(".enemies")
+                       .data(enemyData);
+
+enemies.enter()
+       .append("circle")
+       .attr({
+          class: function(d) { return d.class; },
+          cx: function(d) { return d.x(); },
+          cy: function(d) { return d.y(); },
+          r: gameOptions.radius,
+          fill: "grey"
+       });
+
+var moveEnemies = function() {
+  enemies.transition()
+    .attr({
+      cx: function(d) { return d.x(); },
+      cy: function(d) { return d.y(); }, 
+  });
+};
+
+setInterval(moveEnemies, 1000);
+
+
+
 
 // var createEnemies = function(gameOptions.numEnemies) { 
 
