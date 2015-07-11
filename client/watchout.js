@@ -22,6 +22,19 @@ var player = gameBoard.append("circle")
                 fill: "white"
               });
 
+// modified from http://bl.ocks.org/mbostock/1557377
+var drag = d3.behavior.drag()
+    .on("drag", dragmove);
+
+function dragmove(d) {
+  d3.select(this)
+      .attr("cx", d3.event.x)
+      .attr("cy", d3.event.y);
+}
+
+var p = d3.select('#player')
+p.call(drag);
+
 //-------------enemy----------------
 
 
