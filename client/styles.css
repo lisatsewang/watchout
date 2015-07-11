@@ -3,3 +3,30 @@
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 
+
+.scoreboard {
+  background-color: rgb(0, 100, 200);
+  text-align: center;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  height: 100px;
+  width: 200px;
+  padding: 15px;
+  font-size: 25px;
+  font-family: Helvetica;
+  margin: auto;
+
+}
+
+.board {
+  height: 700px;
+  width: 700px;
+  margin: auto;
+  background-image: url("lib/space.jpg");
+  text-align: center;
+}
+
+.enemy {
+  background-image: url("asteroid.png");
+}
