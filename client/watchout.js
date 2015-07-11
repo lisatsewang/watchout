@@ -37,6 +37,11 @@ var drag = d3.behavior.drag()
               player.style('opacity', 1);
             });
 
+function dragmove(d) {
+  d3.select(this)
+      .attr("cx", d3.event.x)
+      .attr("cy", d3.event.y);
+}
 
 function dragmove(d) {
   d3.select(this)
@@ -48,7 +53,6 @@ var p = d3.select('#player')
 player.call(drag);
 
 //----------------create enemy----------------
-
 
 var enemyData = [];
 
@@ -86,6 +90,7 @@ var moveEnemies = function() {
 };
 
 setInterval(moveEnemies, 1000);
+   
 
 //-------------collision----------------
 
