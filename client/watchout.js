@@ -4,8 +4,11 @@ var gameOptions = {
   width: 800,
   height: 800,
   numEnemies: 40,
-  radius: 20
+  radius: 10,
+  score: 0
 };
+
+//-------------create player-----------------
 
 var gameBoard = d3.select(".board")
                   .append("svg")
@@ -33,9 +36,9 @@ function dragmove(d) {
 }
 
 var p = d3.select('#player')
-p.call(drag);
+player.call(drag);
 
-//-------------enemy----------------
+//----------------create enemy----------------
 
 
 var enemyData = [];
@@ -66,7 +69,7 @@ enemies.enter()
        });
 
 var moveEnemies = function() {
-  enemies.transition()
+  enemies.transition().duration(2000)
     .attr({
       cx: function(d) { return d.x(); },
       cy: function(d) { return d.y(); }, 
@@ -74,6 +77,50 @@ var moveEnemies = function() {
 };
 
 setInterval(moveEnemies, 1000);
+
+//-------------collision----------------
+
+var hasCollision = function() {
+  var pX = p.attr("cx");
+  var pY = p.attr("cy");
+
+  enemies.each( function(d, i){    
+    var enemyX = d3.select(this).attr("cx");
+    var enemyY = d3.select(this).attr("cy");
+//    console.log(enemyX + "," + enemyY);
+
+    if (Math.abs(enemyX - pX) < gameOptions.radius && Math.abs(enemyY - pY) < gameOptions.radius) {
+      return true;
+    }
+  });
+  return false;
+
+  // for (var i = 0; i < enemies.size(); i++) {
+  //   var enemy = enemies[0][i];
+  //   var enemyX = enemy.attr("cx");
+  //   var enemyY = enemy.attr("cy");
+  //   var pX = p.attr("cx");
+  //   var pX = p.attr("cy");
+
+  //   if (Math.abs(enemyX - pX) < gameOptions.radius) {
+  //     return true;
+  //   }
+  // }
+  // return false;
+};
+
+setInterval(function() {
+
+  if (hasCollision()) {
+    console.log("collision!")
+  } else {
+    //console.log("good job")
+    gameOptions.score++;
+    d3.select(".current > span").text(gameOptions.score);
+  }
+
+}, 100);
+
 
 
 
