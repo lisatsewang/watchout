@@ -20,13 +20,9 @@ Feel free to use it if you like. */
 }
 
 .board {
-  height: 700px;
-  width: 700px;
+  height: 800px;
+  width: 800px;
   margin: auto;
   background-image: url("lib/space.jpg");
   text-align: center;
-}
-
-.enemy {
-  background-image: url("asteroid.png");
 }
